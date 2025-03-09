@@ -1,17 +1,19 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 
 function Todo({ todoList, deleteTodo, editTodo, toggleComplete }) {
-
-
-
+  const [value, setValue] = useState("");
+  useEffect(() => {
+    setTimeout(() => { setValue(todoList.task) }, 10)
+  }, []
+  )
   return (
     <div>
-      <div>
-        <p></p>
-      </div>
-      <div></div>
-      <div></div>
-      <input type="text" value={todoList.task} />
+      {
+        todoList.edit === false ?
+          (<input disabled type="text" value={value} onChange={(e) => { setValue(e.target.value) }} />) : (<input type="text" value={value} onChange={(e) => { setValue(e.target.value) }} />
+          )
+
+      }
       {todoList.completed === true ? (
         <button onClick={() => toggleComplete(todoList.id)}>Completed</button>
       ) : <button onClick={() => toggleComplete(todoList.id)}>Pending</button>

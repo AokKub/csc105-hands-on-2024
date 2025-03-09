@@ -1,17 +1,17 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import Todo from './Todo';
 import TodoForm from './TodoForm'
-import {v4 as uuidv4} from "uuid"
+import { v4 as uuidv4 } from "uuid"
 
 
 function TodoWrapper() {
     const [todos, setTodos] = useState([]);
 
     const addTodo = (todo) => {
-        console.log("add to do "+todo)
+        console.log("add to do " + todo)
         setTodos([
             ...todos,
-            {id: uuidv4(), task: todo, completed: false},
+            { id: uuidv4(), task: todo, completed: false, edit: false },
         ])
     }
 
@@ -21,28 +21,34 @@ function TodoWrapper() {
 
     const togTodo = (id) => {
         setTodos(
-            todos.map((todo) => todo.id === id ? {...todo, completed: !todo.completed}: todo)
+            todos.map((todo) => todo.id === id ? { ...todo, completed: !todo.completed } : todo)
+        )
+    }
+
+    const togEdit = (id) => {
+        setTodos(
+            todos.map((todo) => todo.id === id ? { ...todo, edit: !todo.edit } : todo)
         )
     }
 
 
-  return (
+    return (
 
-    <div>
-        <TodoForm
-        addTodo={addTodo}
-        />
-        {todos.map((todo) => (
-            <Todo
-            key={todo.id}
-            todoList={todo}
-            deleteTodo={delTodo}
-            toggleComplete={togTodo}
-            editTodo={togTodo}
+        <div>
+            <TodoForm
+                addTodo={addTodo}
             />
-        ))}
-    </div>
-  )
+            {todos.map((todo) => (
+                <Todo
+                    key={todo.id}
+                    todoList={todo}
+                    deleteTodo={delTodo}
+                    toggleComplete={togTodo}
+                    editTodo={togEdit}
+                />
+            ))}
+        </div>
+    )
 }
 
 export default TodoWrapper
