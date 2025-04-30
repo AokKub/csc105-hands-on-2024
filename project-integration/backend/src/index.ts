@@ -1,0 +1,13 @@
+import { Hono } from "hono";
+import { cors } from "hono/cors";
+import { PrismaClient } from "./generated/prisma";
+import * as Controllers from "./controllers/controll";
+const todo = new Hono();
+todo.use("*", cors());
+todo.get("/todos", Controllers.getAllTodo);
+todo.post("/create", Controllers.createTodo);
+todo.patch("/edit", Controllers.editTodo);
+todo.patch("/toggleStatus", Controllers.toggleTodoStatus);
+todo.delete("/delete", Controllers.deleteTodo);
+export const db = new PrismaClient();
+export default todo;
