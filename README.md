@@ -1,2 +1,2 @@
-# Course CSC-105 homework
+# Course CSC-105 homeworks
 
